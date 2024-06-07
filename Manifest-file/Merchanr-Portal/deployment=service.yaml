@@ -1,0 +1,68 @@
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: msp
+
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: merchant-portal-ui
+  namespace: msp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: merchant-portal-ui
+  template:
+    metadata:
+      labels:
+        app: merchant-portal-ui
+    spec:
+      containers:
+      - name: merchant-portal-ui
+        image: 416668258315.dkr.ecr.us-west-2.amazonaws.com/msp-repo:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: "256Mi"  
+          requests:
+            memory: "128Mi" 
+
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: merchant-portal-ui-service
+  namespace: msp
+spec:
+  selector:
+    app: merchant-portal-ui
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
+
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: merchant-portal-ingress
+  namespace: msp
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: merchant-portal.digitalfiat.app
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: merchant-portal-ui-service
+            port:
+              number: 80
