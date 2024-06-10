@@ -14,22 +14,22 @@ spec:
   type: LoadBalancer
 
 # Ingress
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: merchant-portal-ingress
-#   namespace: msp
-#   annotations:
-#     nginx.ingress.kubernetes.io/rewrite-target: /
-# spec:
-#   rules:
-#   - host: merchant-portal.digitalfiat.app
-#     http:
-#       paths:
-#       - pathType: Prefix
-#         path: "/"
-#         backend:
-#           service:
-#             name: merchant-portal-ui-service
-#             port:
-#               number: 80
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: merchant-portal-ingress
+  namespace: msp
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: merchant-portal.digitalfiat.app
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: merchant-portal-ui-service
+            port:
+              number: 80
