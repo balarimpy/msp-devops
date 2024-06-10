@@ -1,0 +1,28 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: merchant-portal-ui
+  namespace: msp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: merchant-portal-ui
+  template:
+    metadata:
+      labels:
+        app: merchant-portal-ui
+    spec:
+      containers:
+      - name: merchant-portal-ui
+        image: 416668258315.dkr.ecr.us-west-2.amazonaws.com/msp-repo:0.0.1
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            memory: "3Gi"
+          requests:
+            memory: "2.5Gi"
+      imagePullSecrets:
+      - name: ecr-registry-secret
