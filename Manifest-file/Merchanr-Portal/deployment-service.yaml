@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: merchant-portal-ui
-        image: 416668258315.dkr.ecr.us-west-2.amazonaws.com/msp-repo:latest
+        image: 4416668258315.dkr.ecr.us-west-2.amazonaws.com/msp-repo:0.0.1
         ports:
         - containerPort: 3000
         resources:
@@ -26,8 +26,6 @@ spec:
             memory: "128Mi"
       imagePullSecrets:
       - name: ecr-registry-secret
-
-
 # Service
 apiVersion: v1
 kind: Service
