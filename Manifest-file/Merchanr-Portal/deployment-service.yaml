@@ -21,9 +21,12 @@ spec:
         - containerPort: 3000
         resources:
           limits:
-            memory: "256Mi"  
+            memory: "256Mi"
           requests:
-            memory: "128Mi" 
+            memory: "128Mi"
+      imagePullSecrets:
+      - name: ecr-registry-secret
+
 
 # Service
 apiVersion: v1
